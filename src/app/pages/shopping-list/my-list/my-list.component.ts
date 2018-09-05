@@ -40,7 +40,6 @@ export class MyListComponent implements OnInit {
       return this.loadSuggestions();
     }
   }
- 
 
   onChange() {
     this.suggestions = this.items.filter(i => {
@@ -48,60 +47,81 @@ export class MyListComponent implements OnInit {
       return i.name.toLowerCase().match(this.search.toLowerCase());
     });
   }
+
   showMore() {
     this.limit += 3;
   }
 
   inputItem() {
+    // if empty return
     if(!this.search) return;
-    const addedItem = this.suggestions.filter( i => i.name.toLowerCase() == this.search.toLowerCase());
-    if(addedItem.length) {
-      if( this.isInList(this.selected,addedItem[0])) {
-        this.refreshList();
-        this.search = null
-        return ;
-      }
-      this.addItem(addedItem[0]);
-      this.refreshList();
+
+    // check if in selected or suggetsions
+    const check = this.selected.filter(i => i.name.toLowerCase() == this.search.toLowerCase());
+    const addedItem = this.suggestions.filter( i => i.name.toLowerCase() == this.search.toLowerCase())[0];
+
+    // if in any reload suggestions and return
+    if(check.length || (addedItem && this.isInList(this.selected,addedItem))) {
+      this.loadSuggestions();
+      this.search = null;
       return;
     }
-    const newItem:Item = {
-      id: this.items.length,
-      name: this.search,
-      status:false
-    }
-    const check = this.selected.filter( i => i.name.toLowerCase() == this.search.toLowerCase());
 
-    this.refreshList();
-    if(check.length) return this.search = null;
+    // if item in suggestions, add it and reload suggestions
+    if(addedItem) {
+      this.addItem(addedItem);
+      this.loadSuggestions();
+      return;
+    }
+
+    // else its new Item, create object for it
+    const newItem = this.createItem();
+    // add it to selected
     this.addItem(newItem);
+    
     return;
   }
 
- 
+  private createItem():Item {
+    return {
+      id: this.items.length,
+      name: this.search,
+      status:false
+    }    
+  }
 
+  /**
+   * Add the new item to the selected list
+   * reset search and suggestions
+   * @param item new item
+   */
   addItem(item:Item) {
     if(!this.selected || !this.isInList(this.selected,item)) {
       this.selected.push(item);
     }
     this.search = null;
     this.suggestions = [];
-    this.refreshList();
-  }
-  isInList(list:Item[], item){
-    let x = list.map((i) => {
-      return i.name.toLowerCase() == item.name.toLowerCase();
-    })[0];
-    console.log(x);
-    return x
-    
-  }
-
-  private refreshList() {
-    this.suggestions = [];
     this.loadSuggestions();
   }
+
+  /**
+   * If item is in list, return true
+   * it compares using name
+   * @param list haystack
+   * @param item needle
+   */
+  isInList(list:Item[], item){
+    return list.map((i) => {
+      return i.name.toLowerCase() == item.name.toLowerCase();
+    })[0];
+  }
+
+  /**
+   * set items in sugestions
+   * if selected has items, remove them from the sugesstions
+   */
   private loadSuggestions() {
+    this.suggestions = [];
     this.suggestions = this.items;
     if (this.selected.length)
       this.suggestions = this.suggestions.filter(i => !this.isInList(this.selected, i));
