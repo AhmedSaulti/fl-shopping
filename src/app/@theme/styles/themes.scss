@@ -8,7 +8,7 @@ $nb-enabled-themes: (default, cosmic, corporate);
 
 $nb-themes: nb-register-theme((
  // app wise variables for each theme
-  sidebar-header-gap: 2rem,
+  sidebar-header-gap: 0rem,
   sidebar-header-height: initial,
   layout-content-width: 1400px,
 
@@ -34,6 +34,11 @@ $nb-themes: nb-register-theme((
   ecommerce-card-border-width: 1px,
 
   progress-bar-background: linear-gradient(90deg, #3edd81 0%, #3bddaf 100%),
+
+  menu-submenu-item-border-radius:0,
+  checkbox-size:1.5rem,
+  checkbox-checked-size:1.5rem,
+  checkbox-disabled-size:1.5rem,
 ), default, default);
 
 $nb-themes: nb-register-theme((
@@ -67,7 +72,9 @@ $nb-themes: nb-register-theme((
 
   // shadow: none,
   menu-submenu-item-border-radius:0,
-
+  checkbox-size:1.5rem,
+  checkbox-checked-size:1.5rem,
+  checkbox-disabled-size:1.5rem,
 ), cosmic, cosmic);
 
 $nb-themes: nb-register-theme((

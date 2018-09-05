@@ -11,5 +11,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Products',
     icon: 'nb-grid-b-outline',
     link: '/pages/products',
-  }
+  },
+  {
+    title: 'Shopping List',
+    icon: 'nb-compose',
+    link: '/pages/shopping-list',
+  },
 ];

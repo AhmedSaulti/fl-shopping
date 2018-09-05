@@ -1,0 +1,42 @@
+<nb-card>
+  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
+  <nb-card-body>
+    <div class="input-group">
+      <input type="text" class="form-control" (keyup)="onChange()" (blur)="onBlur()" (focus)="onFocus()" [(ngModel)]="search" placeholder="I Wanna Buy...">
+      <span class="input-group-append">
+        <button class="btn btn-danger input-group-text">
+          <i class="fas fa-plus"></i>
+        </button>
+      </span>
+    </div>
+    <div class="suggestions" *ngIf="active">
+      <ul class="list-unstyled row d-flex flex-wrap">
+        <ng-container *ngFor="let item of suggestions; let i=index;">
+          <li class="item-tag p-2 m-2" *ngIf="i<=limit" id="{{item.id}}" (click)="addItem(item)">{{item.name}}</li>
+        </ng-container>
+        <li *ngIf="limit<=items.length" class="item-tag show-more p-2 m-2" (click)="showMore()">
+          <i class="fas fa-plus"></i>
+        </li>
+        <li class="item-tag show-more p-2 m-2" (click)="active = false">
+          <i class="fas fa-times"></i>
+        </li>
+      </ul>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
+  <nb-card-body>
+    <div class="row demo-checkboxes-radio">
+      <ul class="demo-checkboxes #my-list list-unstyled col-12 row">
+        <li class="col-12">
+          <nb-checkbox>Checkbox 1</nb-checkbox><i class="remove fas fa-times ml-2"></i>
+        </li>
+        <li class="col-12">
+          <nb-checkbox [value]="true">Checkbox 2</nb-checkbox>
+        </li>
+      </ul>
+    </div>
+  </nb-card-body>
+</nb-card>

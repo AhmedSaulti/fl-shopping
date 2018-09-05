@@ -18,6 +18,10 @@ const routes: Routes = [
         loadChildren: './products/products.module#ProductsModule'
       },
       {
+        path: 'shopping-list',
+        loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
