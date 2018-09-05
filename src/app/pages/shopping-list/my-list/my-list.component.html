@@ -32,16 +32,18 @@
 </nb-card>
 
 
-    <nb-card>
-      <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
-      <nb-card-body>
-        <div class="row demo-checkboxes-radio">
-          <ul class="demo-checkboxes #my-list list-unstyled col-12 row">
-              <li class="col-12" *ngFor="let item of selected; let i = index">
-                  <input class="styled-checkbox" type="checkbox" name="item.name" id="styled-checkbox-{{i}}" value="item.status">
-            <label for="styled-checkbox-{{i}}">{{item.name}}</label>
-              </li>
-          </ul>
-        </div>
-      </nb-card-body>
-    </nb-card>
+<nb-card>
+  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
+  <nb-card-body>
+    <div class="row demo-checkboxes-radio">
+      <ul class="demo-checkboxes #my-list list-unstyled col-12 row">
+        <li class="col-12" *ngFor="let item of selected; let i = index">
+          <input class="styled-checkbox" type="checkbox" name="item.name" id="styled-checkbox-{{i}}" [checked]=item.status (change)="toggleCheckbox($event.target.checked, i)">
+          <label for="styled-checkbox-{{i}}">{{item.name}}</label>
+          <span></span>
+          <i class="nb-close remove-item ml-2 danger" (click)="removeItem(i)"></i>
+        </li>
+      </ul>
+    </div>
+  </nb-card-body>
+</nb-card>

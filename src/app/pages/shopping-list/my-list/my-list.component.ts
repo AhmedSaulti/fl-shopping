@@ -1,35 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-export interface Item {
-  id: Number;
-  name: String;
-  status: Boolean;
-}
+import { ListItem } from '../../../models/list-item';
+import { ListItemsService } from '../../../services/list-items/list-items.service';
+
 @Component({
   selector: 'fl-my-list',
   templateUrl: './my-list.component.html',
-  styleUrls: ['./my-list.component.scss']
+  styleUrls: ['./my-list.component.scss'],
+  providers:[ListItemsService]
 })
 export class MyListComponent implements OnInit {
-  items: Item[] = [
-    { id: 1, name: 'Milk', status: false  },
-    { id: 2, name: 'Eggs', status: false },
-    { id: 3, name: 'Potato', status: false },
-    { id: 4, name: 'Tomato', status: false },
-    { id: 5, name: 'Cheese', status: false },
-    { id: 6, name: 'Burger', status: false },
-    { id: 7, name: 'Chicken', status: false },
-    { id: 8, name: 'Fish', status: false },
-    { id: 9, name: 'Juice', status: false }
-  ];
-  suggestions: Item[]= [];
-  selected: Item[] = [{ id: 9, name: 'Juice', status: true }];
+  items: ListItem[] ;
+  suggestions: ListItem[]= [];
+  selected: ListItem[] = [];
   search;
   active: boolean = false;
   limit: number = 3;
-  constructor() {}
+  constructor(
+    private listItemsService:ListItemsService
+  ) {}
 
   ngOnInit() {
+    this.getItems();
+    this.loadLocal();
   }
+
+  private loadLocal() {
+    let local = localStorage.getItem('myList');
+    if (local)
+      this.selected = JSON.parse(local);
+  }
+
+  getItems(){
+    this.listItemsService.getListItems().subscribe(
+      res => this.items = res
+    )
+  }
+
   onBlur() {
     // this.active = false;
   }
@@ -83,11 +89,12 @@ export class MyListComponent implements OnInit {
     return;
   }
 
-  private createItem():Item {
+  private createItem():ListItem {
     return {
       id: this.items.length,
       name: this.search,
-      status:false
+      status:false,
+      category: 'Custom',
     }    
   }
 
@@ -96,29 +103,31 @@ export class MyListComponent implements OnInit {
    * reset search and suggestions
    * @param item new item
    */
-  addItem(item:Item) {
-    console.log(this.selected);
-    console.log(item);
-    
+  addItem(item:ListItem) {
     if(this.selected.length == 0 || !this.isInList(this.selected,item)) {
-    // if(!this.selected.length) {
       this.selected.push(item);
       this.selected = [...this.selected]
     } 
-    // else {
-    //   const check = this.selected.filter( i => i.name.toLowerCase() == item.name.toLowerCase())
-    //   if(!check.length) this.selected.push(item)
-    // }
     
     this.search = null;
     this.suggestions = [];
     this.loadSuggestions();
+    this.storeList();
+  }
+
+  removeItem(index) {
+    this.selected.splice(index,1);
+    this.loadSuggestions();
+
+    this.storeList();
+  }
+  private storeList() {
+    localStorage.setItem('myList', JSON.stringify(this.selected));
   }
 
   toggleCheckbox(value,index) {
-    // console.log(value);
     this.selected[index].status = value;
-    
+    this.storeList();
   }
 
   /**
@@ -127,15 +136,10 @@ export class MyListComponent implements OnInit {
    * @param list haystack
    * @param item needle
    */
-  isInList(list:Item[], item):boolean{
-    // console.log(list);
-    // console.log(item);
+  isInList(list:ListItem[], item):boolean{
     let x = list.filter((i) => {
-      // console.log(i.name + ' -- ' + item.name);
-      
       return i.name.toLowerCase() == item.name.toLowerCase();
     });
-    // console.log(x);
     return (x.length)? true:false
   }
 
@@ -150,6 +154,4 @@ export class MyListComponent implements OnInit {
       this.suggestions = this.suggestions.filter(i => !this.isInList(this.selected, i));
     return;
   }
-
-
 }
