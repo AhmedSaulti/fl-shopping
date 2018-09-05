@@ -10,4 +10,9 @@
 
 export const environment = {
   production: false,
+  settings: {
+    apiProtocol: 'https',
+    apiHost: 'www.bringmeister.de',
+    apiEndPoint: 'api',
+  }
 };

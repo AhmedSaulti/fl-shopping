@@ -7,4 +7,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dashboard',
     home: true,
   },
+  {
+    title: 'Products',
+    icon: 'nb-grid-b-outline',
+    link: '/pages/products',
+  }
 ];

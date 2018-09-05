@@ -14,6 +14,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Global } from './services/global';
+import { environment } from '../environments/environment';
+import { Settings } from './models/settings';
+import { HttpService } from './services/http/http.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +34,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
+    HttpService
   ],
 })
 export class AppModule {
+  constructor() {
+    Global.Settings = environment.settings as Settings;
+  }
 }
