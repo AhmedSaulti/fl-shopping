@@ -1,6 +1,7 @@
 <nb-card>
   <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
   <nb-card-body>
+    <!-- Input Start -->
     <div class="input-group">
       <input type="text" class="form-control" (keyup)="onChange()" (blur)="onBlur()" (focus)="onFocus()" [(ngModel)]="search" placeholder="I Wanna Buy...">
       <span class="input-group-append">
@@ -9,6 +10,9 @@
         </button>
       </span>
     </div>
+    <!-- Input End -->
+
+    <!-- Suggestions Bloack Start -->
     <div class="suggestions" *ngIf="active && suggestions.length !=0">
       <ul class="list-unstyled row d-flex flex-wrap">
         <ng-container *ngFor="let item of suggestions; let i=index;">
@@ -22,19 +26,22 @@
         </li>
       </ul>
     </div>
+    <!-- Suggestions Bloack End -->
+
   </nb-card-body>
 </nb-card>
 
-<nb-card>
-  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
-  <nb-card-body>
-    <div class="row demo-checkboxes-radio">
-      <ul class="demo-checkboxes #my-list list-unstyled col-12 row">
-        <li class="col-12" *ngFor="let item of selected; let i = index">
-          <input class="styled-checkbox" type="checkbox" name="item.name" id="styled-checkbox-{{i}}" value="item.status">
-          <label for="styled-checkbox-{{i}}">{{item.name}}</label>          
-        </li>
-      </ul>
-    </div>
-  </nb-card-body>
-</nb-card>
+
+    <nb-card>
+      <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
+      <nb-card-body>
+        <div class="row demo-checkboxes-radio">
+          <ul class="demo-checkboxes #my-list list-unstyled col-12 row">
+              <li class="col-12" *ngFor="let item of selected; let i = index">
+                  <input class="styled-checkbox" type="checkbox" name="item.name" id="styled-checkbox-{{i}}" value="item.status">
+            <label for="styled-checkbox-{{i}}">{{item.name}}</label>
+              </li>
+          </ul>
+        </div>
+      </nb-card-body>
+    </nb-card>

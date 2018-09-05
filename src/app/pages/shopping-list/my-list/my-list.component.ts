@@ -22,7 +22,7 @@ export class MyListComponent implements OnInit {
     { id: 9, name: 'Juice', status: false }
   ];
   suggestions: Item[]= [];
-  selected: Item[] = [{ id: 9, name: 'Juice', status: false }];
+  selected: Item[] = [{ id: 9, name: 'Juice', status: true }];
   search;
   active: boolean = false;
   limit: number = 3;
@@ -78,6 +78,7 @@ export class MyListComponent implements OnInit {
     const newItem = this.createItem();
     // add it to selected
     this.addItem(newItem);
+    this.loadSuggestions();
     
     return;
   }
@@ -96,12 +97,28 @@ export class MyListComponent implements OnInit {
    * @param item new item
    */
   addItem(item:Item) {
-    if(!this.selected || !this.isInList(this.selected,item)) {
+    console.log(this.selected);
+    console.log(item);
+    
+    if(this.selected.length == 0 || !this.isInList(this.selected,item)) {
+    // if(!this.selected.length) {
       this.selected.push(item);
-    }
+      this.selected = [...this.selected]
+    } 
+    // else {
+    //   const check = this.selected.filter( i => i.name.toLowerCase() == item.name.toLowerCase())
+    //   if(!check.length) this.selected.push(item)
+    // }
+    
     this.search = null;
     this.suggestions = [];
     this.loadSuggestions();
+  }
+
+  toggleCheckbox(value,index) {
+    // console.log(value);
+    this.selected[index].status = value;
+    
   }
 
   /**
@@ -110,10 +127,16 @@ export class MyListComponent implements OnInit {
    * @param list haystack
    * @param item needle
    */
-  isInList(list:Item[], item){
-    return list.map((i) => {
+  isInList(list:Item[], item):boolean{
+    // console.log(list);
+    // console.log(item);
+    let x = list.filter((i) => {
+      // console.log(i.name + ' -- ' + item.name);
+      
       return i.name.toLowerCase() == item.name.toLowerCase();
-    })[0];
+    });
+    // console.log(x);
+    return (x.length)? true:false
   }
 
   /**
@@ -127,4 +150,6 @@ export class MyListComponent implements OnInit {
       this.suggestions = this.suggestions.filter(i => !this.isInList(this.selected, i));
     return;
   }
+
+
 }
