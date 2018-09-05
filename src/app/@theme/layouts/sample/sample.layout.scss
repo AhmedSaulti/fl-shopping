@@ -54,8 +54,8 @@
     /deep/ .main-container {
       height:
         calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)} - #{nb-theme(sidebar-header-gap)}) !important;
-      @include nb-ltr(border-top-right-radius, nb-theme(radius));
-      @include nb-rtl(border-top-left-radius, nb-theme(radius));
+      // @include nb-ltr(border-top-right-radius, nb-theme(radius));
+      // @include nb-rtl(border-top-left-radius, nb-theme(radius));
 
       @include nb-for-theme(corporate) {
         border: 1px solid nb-theme(separator);
@@ -109,15 +109,15 @@
       & > .menu-items {
         & > .menu-item:first-child {
           .menu-title {
-            &::after {
-              content: 'new';
-              color: nb-theme(color-white);
-              margin-left: 1rem;
-              background: nb-theme(color-danger);
-              padding: 0 0.5rem;
-              border-radius: nb-theme(radius);
-              font-size: nb-theme(font-size-sm);
-            }
+            // &::after {
+            //   content: 'new';
+            //   color: nb-theme(color-white);
+            //   margin-left: 1rem;
+            //   background: nb-theme(color-danger);
+            //   padding: 0 0.5rem;
+            //   border-radius: nb-theme(radius);
+            //   font-size: nb-theme(font-size-sm);
+            // }
           }
         }
       }

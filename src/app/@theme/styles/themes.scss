@@ -38,7 +38,7 @@ $nb-themes: nb-register-theme((
 
 $nb-themes: nb-register-theme((
   // app wise variables for each theme
-  sidebar-header-gap: 2rem,
+  sidebar-header-gap: 0rem,
   sidebar-header-height: initial,
   layout-content-width: 1400px,
 
@@ -64,6 +64,10 @@ $nb-themes: nb-register-theme((
   ecommerce-card-border-width: 1px,
 
   progress-bar-background: linear-gradient(90deg, #00c7c7 0%, #00d977 100%),
+
+  // shadow: none,
+  menu-submenu-item-border-radius:0,
+
 ), cosmic, cosmic);
 
 $nb-themes: nb-register-theme((
