@@ -1,0 +1,9 @@
+<nb-card>
+  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
+  <nb-card-body>
+      <ng-container *ngFor="let item of myList; let i = index">
+        <nb-user [name]="item.name" [title]="item.category" size="large"></nb-user>
+      </ng-container>
+
+  </nb-card-body>
+</nb-card>

@@ -22,6 +22,10 @@ const routes: Routes = [
         loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
       },
       {
+        path: 'budget',
+        loadChildren: './budget/budget.module#BudgetModule'
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

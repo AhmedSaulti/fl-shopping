@@ -25,9 +25,9 @@ export class MyListComponent implements OnInit {
   }
 
   private loadLocal() {
-    let local = localStorage.getItem('myList');
-    if (local)
-      this.selected = JSON.parse(local);
+    this.listItemsService.getLocalList().subscribe(
+      (res) => { this.selected = res;}
+    )
   }
 
   getItems(){
@@ -122,7 +122,7 @@ export class MyListComponent implements OnInit {
     this.storeList();
   }
   private storeList() {
-    localStorage.setItem('myList', JSON.stringify(this.selected));
+    this.listItemsService.setLocalList(this.selected);
   }
 
   toggleCheckbox(value,index) {

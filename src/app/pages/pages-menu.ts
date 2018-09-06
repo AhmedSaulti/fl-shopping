@@ -8,9 +8,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Products',
-    icon: 'nb-grid-b-outline',
-    link: '/pages/products',
+    title: 'Budget',
+    icon: 'ion-card',
+    link: '/pages/budget',
   },
   {
     title: 'Shopping List',

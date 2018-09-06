@@ -12,8 +12,8 @@ export class ProductsService {
   getProducts(type?, limit?, offset?){
     let params = {
       limit: limit||60,
-      offset: offset||0,
-      type: type||''
+      offset: 120,
+      q: type||''
     };
     return this.http.get('products',params);
   }
