@@ -9,25 +9,25 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      {
-        path: 'dashboard',
-        component: DashboardComponent
-      },
-      {
-        path: 'products',
-        loadChildren: './products/products.module#ProductsModule'
-      },
+      // {
+      //   path: 'dashboard',
+      //   component: DashboardComponent
+      // },
+      // {
+      //   path: 'products',
+      //   loadChildren: './products/products.module#ProductsModule'
+      // },
       {
         path: 'shopping-list',
         loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
       },
-      {
-        path: 'budget',
-        loadChildren: './budget/budget.module#BudgetModule'
-      },
+      // {
+      //   path: 'budget',
+      //   loadChildren: './budget/budget.module#BudgetModule'
+      // },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'shopping-list',
         pathMatch: 'full'
       }
     ]

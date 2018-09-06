@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ListItem } from '../../../models/list-item';
 import { ListItemsService } from '../../../services/list-items/list-items.service';
+import { ProductsService } from '../../../services/products/products.service';
 
 @Component({
   selector: 'fl-my-list',
   templateUrl: './my-list.component.html',
-  styleUrls: ['./my-list.component.scss'],
-  providers:[ListItemsService]
+  styleUrls: ['./my-list.component.scss']
 })
 export class MyListComponent implements OnInit {
   items: ListItem[] ;
   suggestions: ListItem[]= [];
   selected: ListItem[] = [];
+  categories = [];
   search;
   active: boolean = false;
   limit: number = 3;
+  categorized:boolean = false;
   constructor(
-    private listItemsService:ListItemsService
+    private listItemsService:ListItemsService,
+    private productsService:ProductsService
   ) {}
 
   ngOnInit() {
@@ -26,7 +29,13 @@ export class MyListComponent implements OnInit {
 
   private loadLocal() {
     this.listItemsService.getLocalList().subscribe(
-      (res) => { this.selected = res;}
+      (res) => { 
+        this.selected = res;
+        this.selected.forEach(element => {
+          this.getProduct(element)
+          this.updateCategory(element)
+        });
+      }
     )
   }
 
@@ -113,18 +122,44 @@ export class MyListComponent implements OnInit {
     this.suggestions = [];
     this.loadSuggestions();
     this.storeList();
+    this.getProduct(item)
+    this.updateCategory(item);
   }
 
+  /**
+   * if item category not in the categories list, Add it
+   * @param item item to check
+   */
+  private updateCategory(item: ListItem) {
+    const cat = this.categories.find(i => i == item.category);
+    if (!cat)
+      this.categories.push(item.category);
+    
+  }
+
+  /**
+   * On deleting item from list, remove it from selected
+   * @param index item index
+   */
   removeItem(index) {
     this.selected.splice(index,1);
     this.loadSuggestions();
-
     this.storeList();
   }
+
+  /**
+   * Store the list in local storage
+   */
   private storeList() {
     this.listItemsService.setLocalList(this.selected);
   }
 
+  /**
+   * On change of check, update item status
+   *
+   * @param value true or false checked
+   * @param index item index
+   */
   toggleCheckbox(value,index) {
     this.selected[index].status = value;
     this.storeList();
@@ -153,5 +188,28 @@ export class MyListComponent implements OnInit {
     if (this.selected.length)
       this.suggestions = this.suggestions.filter(i => !this.isInList(this.selected, i));
     return;
+  }
+
+  private getProduct(item){
+    this.productsService.getProducts(item.name,1).subscribe(
+      res => {
+        this.setPrice(res, item);
+      }
+    )
+  }
+
+  /**
+   * if res got price, add it to item
+   * if it doesn't set a random price
+   * @param res result from API
+   * @param item The item to be priced
+   */
+  private setPrice(res: any, item: any) {
+    if (res.products[0]) {
+      const product = res.products[0];
+      item.price = product.prices.price;
+    } else {
+      item.price = Math.round(Math.random()*500)/100
+    }
   }
 }

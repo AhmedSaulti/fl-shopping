@@ -52,9 +52,11 @@
       @include nb-ltr(border-left, 1px solid nb-theme(separator));
       @include nb-rtl(border-right, 1px solid nb-theme(separator));
       white-space: nowrap;
+      color: nb-theme(color-primary);
 
       span {
         font-weight: nb-theme(font-weight-normal);
+        color:#2a2a2a;
       }
     }
   }

@@ -71,7 +71,23 @@
   }
 }
 .remove-item {
-    font-size: 1.2rem;
-    position: absolute;
-    top: 2px;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 2px;
+}
+
+.remove-card {
+  font-size: 2rem;
+  position: absolute;
+  top: -12px;
+  cursor: pointer;
+}
+.item {
+    margin-bottom: 10px;
+}
+.purchasd{
+    color: #12b427;
+}
+/deep/ .user-picture.background {
+  display: none!important;
 }

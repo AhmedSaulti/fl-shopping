@@ -31,9 +31,8 @@
   </nb-card-body>
 </nb-card>
 
-
+<!-- 
 <nb-card>
-  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
   <nb-card-body>
     <div class="row demo-checkboxes-radio">
       <ul class="demo-checkboxes #my-list list-unstyled col-12 row">
@@ -44,6 +43,58 @@
           <i class="nb-close remove-item ml-2 danger" (click)="removeItem(i)"></i>
         </li>
       </ul>
+    </div>
+  </nb-card-body>
+</nb-card> -->
+
+<nb-card>
+  <!-- <nb-card-header>Checkboxes & Radios</nb-card-header> -->
+  <nb-card-body>
+    <div class="row demo-checkboxes-radio">
+      <div class="buttons-container">
+        <button class="btn btn-success ml-4 mb-4" [disabled]="!categorized" (click)="categorized = false">All</button>
+        <button class="btn btn-success ml-4 mb-4" [disabled]="categorized" (click)="categorized = true">Categorized</button>
+      </div>
+
+      <ul class="demo-checkboxes #my-list list-unstyled col-12 row" *ngIf="!categorized">
+        <li class="col-12 item d-flex align-items-center" [class.purchasd]="item.status" *ngFor="let item of selected; let i = index">
+          <input class="styled-checkbox col-1" type="checkbox" name="item.name" id="styled-checkbox-{{i}}" [checked]=item.status (change)="toggleCheckbox($event.target.checked, i)">
+          <label for="styled-checkbox-{{i}}"></label>
+          <nb-user [name]="item.name" [title]="item.category" size="large" class="col-5"></nb-user>
+
+          <div class="col-3 d-flex justify-content-center align-items-center">
+            <p class="mb-0">
+              {{item.price}} <i class="fas fa-euro-sign"></i>
+              <!-- <span class="ion-euro price">10</span> -->
+            </p>
+          </div>
+          <div class="col-3 d-flex justify-content-center">
+            <span class="nb-close remove-card" (click)="removeItem(i)"></span>
+          </div>
+        </li>
+      </ul>
+      <ng-container *ngIf="categorized">
+        <ul class="demo-checkboxes #my-list list-unstyled col-12 row" *ngFor="let cat of categories">
+          <h4 class="ml-3 mt-2 mb-2">{{cat}}</h4>
+          <ng-container *ngFor="let item of selected; let i = index">
+            <li class="col-12 item d-flex align-items-center" [class.purchasd]="item.status" *ngIf="item.category == cat">
+              <input class="styled-checkbox col-1" type="checkbox" name="item.name" id="styled-checkbox-{{i}}" [checked]=item.status (change)="toggleCheckbox($event.target.checked, i)">
+              <label for="styled-checkbox-{{i}}"></label>
+              <nb-user [name]="item.name" [title]="item.category" size="large" class="col-5"></nb-user>
+
+              <div class="col-3 d-flex justify-content-center align-items-center">
+                <p class="mb-0">
+                  {{item.price}} <i class="fas fa-euro-sign"></i>
+                  <!-- <span class="ion-euro price">10</span> -->
+                </p>
+              </div>
+              <div class="col-3 d-flex justify-content-center">
+                <span class="nb-close remove-card" (click)="removeItem(i)"></span>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </ng-container>
     </div>
   </nb-card-body>
 </nb-card>
